@@ -9,12 +9,18 @@ import android.widget.Button;
 
 import com.crashlytics.android.Crashlytics;
 
+import io.fabric.sdk.android.Fabric;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Fabric.with(this, new Crashlytics());
+        Crashlytics.log("Your log");
+        Crashlytics.logException(new Throwable("This your not-fatal name"));
 
         Button crashButton = new Button(this);
         crashButton.setText("Crash!");
