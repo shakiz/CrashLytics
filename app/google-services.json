@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "670809891048",
+    "firebase_url": "https://crashlytics-bcb00.firebaseio.com",
+    "project_id": "crashlytics-bcb00",
+    "storage_bucket": "crashlytics-bcb00.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670809891048:android:eaf7b343388c12e461a95d",
+        "android_client_info": {
+          "package_name": "com.scibd.crashlytics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670809891048-n2nemq461at6f2gjv2rhp6ed1mp2c53p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scibd.crashlytics",
+            "certificate_hash": "b3012e7a20c597fb13535b2d004402981ad20d43"
+          }
+        },
+        {
+          "client_id": "670809891048-0jr3j8k8qahsuglv50cvm32eqf98t1io.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrTzhVUtG5RQ2vDDe98k-sOEzLji1-Ycc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670809891048-0jr3j8k8qahsuglv50cvm32eqf98t1io.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
