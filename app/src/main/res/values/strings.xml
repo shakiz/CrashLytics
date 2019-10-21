@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CrashLytics</string>
+    <string name="dummy">-----------------------Separation--------------------------</string>
 </resources>
