@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+// Apply the Performance Monitoring plugin
+apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
     compileSdkVersion 29
@@ -31,10 +33,10 @@ dependencies {
     implementation 'com.crashlytics.sdk.android:answers:1.4.7'
     // Add the dependency for the Performance Monitoring library
     implementation 'com.google.firebase:firebase-perf:19.0.1'
-
-    // firebase config
+    // FireBase remote config
     implementation 'com.google.firebase:firebase-config:10.0.1'
-
+    // FireBase analytics
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

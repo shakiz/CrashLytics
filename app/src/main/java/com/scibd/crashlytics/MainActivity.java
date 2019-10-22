@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,17 +12,16 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-
 import java.util.HashMap;
-
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
     private static String TAG = "MainActivity";
-    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private FirebaseRemoteConfig mFireBaseRemoteConfig;
     private Button crash;
     private TextView value,welcome;
     private EditText editText;
@@ -34,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init();
+
+        firebaseAnalytics();
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -66,26 +66,37 @@ public class MainActivity extends AppCompatActivity {
         //region crashlytics end
 
         //region remote config starts
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        mFirebaseRemoteConfig.setConfigSettings(new FirebaseRemoteConfigSettings.Builder()
+        mFireBaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        mFireBaseRemoteConfig.setConfigSettings(new FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(true)
+                .setMinimumFetchIntervalInSeconds(100)
                 .build());
         HashMap<String,Object> defaults = new HashMap<>();
         defaults.put("test_config",7);
         defaults.put("welcome_message","Welcome");
 
-        mFirebaseRemoteConfig.setDefaults(defaults);
-        final Task<Void> fetch = mFirebaseRemoteConfig.fetch();
+        mFireBaseRemoteConfig.setDefaults(defaults);
+        final Task<Void> fetch = mFireBaseRemoteConfig.fetch();
         fetch.addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                mFirebaseRemoteConfig.activateFetched();
+                mFireBaseRemoteConfig.activateFetched();
                 maxTextLength();
                 setTextViewMessage();
             }
         });
         //region remote config end
 
+    }
+
+    private void firebaseAnalytics() {
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics.setSessionTimeoutDuration(10);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID,"007");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME,getPackageName());
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE,"testType");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.CAMPAIGN_DETAILS,bundle);
     }
 
     private void init() {
@@ -96,12 +107,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void maxTextLength() {
-        int max = (int) mFirebaseRemoteConfig.getLong("test_config");
+        int max = (int) mFireBaseRemoteConfig.getLong("test_config");
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(max)});
     }
 
     private void setTextViewMessage(){
-        String msg = mFirebaseRemoteConfig.getString("welcome_message");
+        String msg = mFireBaseRemoteConfig.getString("welcome_message");
         welcome.setText(msg);
     }
 }
